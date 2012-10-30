@@ -16,32 +16,31 @@ import { useAccount, usePrepareContractWrite, useContractWrite } from "wagmi";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import POE from "@data/POE.json";
+import {
+  useSigner,
+  useSendTransaction,
+  usePrepareSendTransaction,
+} from "wagmi";
+import Landing from "@components/Landing";
 
 function Claim() {
+  const { address: connectedAddress } = useAccount();
   const router = useRouter();
+  const signer = useSigner();
   const { address } = router.query;
-  const [isSBT, setSBT] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSBT, setSBT] = useState<boolean>(false);
 
-  // const { config } = usePrepareContractWrite({
-  //   addressOrName: address ?? "0x8Dec478C52c63552708559340B6Cc4456a454d49",
-  //   contractInterface: POE.abi,
-  //   functionName: "mint",
-  //   args: [...],
-  //   overrides: {
-  //     value: ethers.utils.parseEther(".51"),
-  //   },
-  // });
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: "0x9c060aa7Cbc374e92Aa2D23Ec4C9f992b10a843b",
+      value: ethers.utils.parseEther("0.01"),
+    },
+  });
 
-  // const {
-  //   data: txnData,
-  //   isLoading,
-  //   isSuccess,
-  //   write: mintNFT,
-  // } = useContractWrite(config);
-  const txnHash = "";
+  const { data, isLoading, isSuccess, sendTransaction } =
+    useSendTransaction(config);
 
-  const isSuccess = false;
+  if (!connectedAddress) return <Landing />;
 
   if (isSuccess) {
     if (isSBT) {
@@ -62,11 +61,7 @@ function Claim() {
               </Text>
               <HStack>
                 <ChakraLink
-                  href={
-                    txnHash
-                      ? `https://cronos.org/explorer/testnet3/tx/${txnHash}`
-                      : "https://cronos.org/explorer/testnet3/tx/0x73b89429e1c02520ff5cfabe28df0d8b2bd85ece3bb69e33deba314f8827e866"
-                  }
+                  href={`https://cronos.org/explorer/testnet3/tx/1`}
                   isExternal
                 >
                   <Button className={styles.primaryBtn}>
@@ -129,7 +124,10 @@ function Claim() {
                 placeholder="Enter your wallet address"
                 className={styles.claimInput}
               ></Input>
-              <Button className={styles.primaryBtn} onClick={() => {}}>
+              <Button
+                className={styles.primaryBtn}
+                onClick={() => sendTransaction()}
+              >
                 {isLoading ? <Spinner color="black" /> : "Claim NFT"}
               </Button>
             </HStack>
@@ -155,7 +153,12 @@ function Claim() {
               placeholder="Enter your wallet address"
               className={styles.claimInput}
             ></Input>
-            <Button className={styles.primaryBtn}>Claim POE</Button>
+            <Button
+              className={styles.primaryBtn}
+              onClick={() => sendTransaction?.()}
+            >
+              {isLoading ? <Spinner color="black" /> : "Claim POE"}
+            </Button>
           </HStack>
         </VStack>
       </HStack>

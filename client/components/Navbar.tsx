@@ -23,7 +23,7 @@ const Navbar = () => {
       </Link>
       {address ? (
         <HStack className={styles.navLeftSection}>
-          <Link href="/dashboard">
+          <Link href="/">
             <Text fontWeight={700}>Dashboard</Text>
           </Link>
           <Link href="/community">

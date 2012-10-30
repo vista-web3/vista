@@ -9,6 +9,8 @@ import {
   Button,
   Textarea,
   Spinner,
+  useToast,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 import withTransition from "@components/withTransition";
 import styles from "@styles/Create.module.css";
@@ -19,17 +21,17 @@ import MembershipSBT from "@data/MembershipSBT.json";
 
 const inviteLink = "hi";
 
-function Create() {
+function Create(setIsOnboarding) {
   const { data: signer, isError } = useSigner();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isCountriesVisible, setCountriesVisible] = useState<boolean>();
   const [selectedTag, setSelectedTag] = useState<string>("");
   const [isSuccess, setIsSuccess] = useState<boolean>(true);
   const [isCopied, setIsCopied] = useState<boolean>(false);
-
   const [communityName, setCommunityName] = useState<string>("");
   const [tokenSymbol, setTokenSymbol] = useState<string>("");
   const [publishedContract, setPublishedContract] = useState<string>("");
+  const toast = useToast();
 
   function handleNameChange(e) {
     setCommunityName(e.target.value);
@@ -44,13 +46,35 @@ function Create() {
     setCountriesVisible(false);
   }
 
+  function triggerToast(address) {
+    toast({
+      position: "bottom-right",
+      title: "Transaction Submitted",
+      description: "Click to view your transaction on Cronoscan.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      render: () => {
+        return (
+          <ChakraLink
+            href={`https://testnet.cronoscan.com/address/${address}`}
+            isExternal
+          >
+            <VStack color="white" p={3} bg="green.500" borderRadius="5px">
+              <Text fontWeight={700}>Transaction Submitted</Text>
+              <Text>Click to view your transaction on Cronoscan.</Text>
+            </VStack>
+          </ChakraLink>
+        );
+      },
+    });
+  }
+
   async function deployContract() {
     if (!signer) return;
     setLoading(true);
 
     try {
-      //   const [collectionURI, imageURI] = await uploadMetadata();
-
       const contractFactory = new ethers.ContractFactory(
         MembershipSBT.abi,
         MembershipSBT.bytecode,
@@ -66,6 +90,8 @@ function Create() {
       setPublishedContract(contract.address);
       //   saveContract(contract.address, imageURI);
       setIsSuccess(true);
+      triggerToast(contract.address);
+      setIsOnboarding(false);
     } catch (err) {
       console.log(err);
     }
@@ -98,8 +124,8 @@ function Create() {
               to share this NFT with your community.
             </Text>
             <HStack>
-              <HStack className={styles.inputBox}>
-                <Text>vista.xyz/78123qqr</Text>
+              <HStack className={styles.inputBox} onClick={triggerToast}>
+                <Text>tryvista.xyz/claim/0x9c06...</Text>
               </HStack>
               {isCopied ? (
                 <Button className={styles.primaryBtn} onClick={handleCopy}>

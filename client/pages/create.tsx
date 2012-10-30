@@ -25,13 +25,21 @@ import withTransition from "@components/withTransition";
 import styles from "@styles/Create.module.css";
 import { useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
-import { useSigner } from "wagmi";
+import {
+  useAccount,
+  useSigner,
+  usePrepareContractWrite,
+  useContractWrite,
+} from "wagmi";
 import { ethers } from "ethers";
 import POE from "@data/POE.json";
+import Landing from "@components/Landing";
+import { Web3Storage } from "web3.storage";
 
-const inviteLink = "hi";
+const inviteLink = "http://localhost:3000/claim/1";
 
 function Create() {
+  const { address } = useAccount();
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const { data: signer, isError } = useSigner();
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -45,7 +53,77 @@ function Create() {
   const [campaignName, setCampaignName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [publishedContract, setPublishedContract] = useState<string>("");
+  const [imageCID, setImageCID] = useState<string>("");
+  const [jsonCID, setJsonCID] = useState<string>("");
+  const [uploadedImage, setUploadedImage] = useState<Blob>();
   const toast = useToast();
+  const WEB3_STORAGE_TOKEN = process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY;
+
+  function handleImageUpload(e) {
+    setUploadedImage(e.target.files[0]);
+  }
+
+  const client = new Web3Storage({
+    token: WEB3_STORAGE_TOKEN,
+    endpoint: new URL("https://api.web3.storage"),
+  });
+
+  const demoTokenURI =
+    "https://bafybeicynj2l3xinctywttkivp44me4dkh7kqi77twtyxipmmgblkoib2a.ipfs.w3s.link/tokenURI.json";
+
+  async function uploadImage() {
+    if (!uploadedImage) return;
+
+    const blob = new Blob([uploadedImage], { type: "image/png" });
+    const imageToUpload = [new File([blob], "file.png")];
+    const imageCID = await client.put(imageToUpload);
+    const imageLink = `https://${imageCID}.ipfs.w3s.link/file.png`;
+    setImageCID(imageLink);
+
+    return imageLink;
+  }
+
+  async function uploadJSON() {
+    const imageCID = await uploadImage();
+
+    const jsonObject = {
+      name: name,
+      description: description,
+      collection: "Nexus Protocol Collection 3",
+      image_url:
+        imageCID ??
+        "https://bafybeie6rfxujzadhx5t3ofso6sckg33jknl5vhobmgby7uetpmbzaojvm.ipfs.w3s.link/preview.png",
+    };
+    const blob = new Blob([JSON.stringify(jsonObject)], {
+      type: "application/json",
+    });
+
+    const files = [new File([blob], "metadata.json")];
+    const jsonCID = await client.put(files);
+    const jsonLink = `https://${jsonCID}.ipfs.w3s.link/metadata.json`;
+    setJsonCID(jsonLink);
+
+    return jsonLink;
+  }
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: "0xd2d99f4dF0a6e489EB70EE471E42Af4677f5E474",
+    contractInterface: MyNFT.abi,
+    functionName: "mint",
+    args: [jsonCID],
+  });
+
+  const {
+    data: txnData,
+    isLoading,
+    isSuccess,
+    write: mintNFT,
+  } = useContractWrite(config);
+
+  async function handleListAsset() {
+    const jsonUploaded = await uploadJSON();
+    mintNFT(jsonUploaded);
+  }
 
   function handleFileUpload(e) {
     setFile(e.target.files[0]);
@@ -64,18 +142,23 @@ function Create() {
     setDescription(e.target.value);
   }
 
-  function triggerToast() {
+  function triggerToast(address) {
     toast({
+      position: "bottom-right",
       title: "Transaction Submitted",
-      description: "We're unable to verify your completion.",
+      description: "Click to view your transaction on Cronoscan.",
       status: "success",
       duration: 5000,
       isClosable: true,
       render: () => {
         return (
-          <ChakraLink href="https://google.com" isExternal>
-            <VStack color="white" p={3} bg="green.500">
-              <Text>Transaction Submitted</Text>
+          <ChakraLink
+            href={`https://testnet.cronoscan.com/address/${address}`}
+            isExternal
+          >
+            <VStack color="white" p={3} bg="green.500" borderRadius="5px">
+              <Text fontWeight={700}>Transaction Submitted</Text>
+              <Text>Click to view your transaction on Cronoscan.</Text>
             </VStack>
           </ChakraLink>
         );
@@ -127,6 +210,8 @@ function Create() {
     }, 1000);
   }
 
+  if (!address) return <Landing />;
+
   if (isSuccess) {
     return (
       <VStack className={styles.container}>
@@ -140,7 +225,7 @@ function Create() {
             </Text>
             <HStack>
               <HStack className={styles.inputBox} onClick={triggerToast}>
-                <Text>vista.xyz/78123qqr</Text>
+                <Text>tryvista.xyz/claim/0x9c06...</Text>
               </HStack>
               {isCopied ? (
                 <Button className={styles.primaryBtn} onClick={handleCopy}>
@@ -221,7 +306,7 @@ function Create() {
                   id="images"
                   required
                   multiple
-                  onChange={handleFileUpload}
+                  onChange={handleImageUpload}
                   className={styles.fileUploader}
                 />
                 <VStack className={styles.fileUploaderTextContainer}>

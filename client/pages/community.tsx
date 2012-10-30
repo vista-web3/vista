@@ -23,6 +23,7 @@ import {
   ModalCloseButton,
   Link as ChakraLink,
   Divider,
+  Spinner,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import withTransition from "@components/withTransition";
@@ -30,6 +31,14 @@ import styles from "@styles/Community.module.css";
 import { Checkbox } from "@chakra-ui/react";
 import { useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import {
+  useAccount,
+  useSigner,
+  useSendTransaction,
+  usePrepareSendTransaction,
+} from "wagmi";
+import { ethers } from "ethers";
+import Landing from "@components/Landing";
 
 const users = [
   {
@@ -119,6 +128,7 @@ function capitalizeFirstLetter(string) {
 }
 
 function Community() {
+  const { address } = useAccount();
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedToken, setSelectedToken] = useState<string>("");
@@ -127,6 +137,16 @@ function Community() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [optionsVisible, setOptionsVisible] = useState<boolean>();
   const [modalStep, setModalStep] = useState(0);
+
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: "0x9c060aa7Cbc374e92Aa2D23Ec4C9f992b10a843b",
+      value: ethers.utils.parseEther("0.1"),
+    },
+  });
+
+  const { data, isLoading, isSuccess, sendTransaction } =
+    useSendTransaction(config);
 
   function handleAmountChange(e) {
     setAmount(e.target.value);
@@ -190,8 +210,10 @@ function Community() {
     setOptionsVisible(false);
   }
 
-  const isAirdropSuccess = true;
+  const isAirdropSuccess = false;
   const txnHash = "";
+
+  if (!address) return <Landing />;
 
   if (isAirdropSuccess)
     return (
@@ -208,7 +230,7 @@ function Community() {
               Woo, you just airdropped tokens!
             </Text>
             <Text className={styles.successClaimHeader}>
-              We’ve airdropped $50 CRO tokens to developers
+              We’ve airdropped 0.1 CRO tokens to developers
             </Text>
             <HStack>
               <ChakraLink
@@ -265,10 +287,10 @@ function Community() {
                   {optionsVisible && (
                     <VStack className={styles.selectionContainer}>
                       {[
-                        { name: "Ethereum", image: "/eth.png" },
+                        { name: "ETH", image: "/eth.png" },
 
-                        { name: "Cronos", image: "/cronos.png" },
-                        { name: "Gnosis Chain", image: "/gnosis.png" },
+                        { name: "CRO", image: "/cronos.png" },
+                        { name: "DAI", image: "/gnosis.png" },
                       ].map(({ name, image }, idx) => (
                         <VStack
                           key={idx}
@@ -328,8 +350,11 @@ function Community() {
                   </Text>
                 </HStack>
                 <Box h="1rem"></Box>
-                <Button className={styles.modalBtn} onClick={() => {}}>
-                  Confirm
+                <Button
+                  className={styles.modalBtn}
+                  onClick={() => sendTransaction?.()}
+                >
+                  {isLoading ? <Spinner color="white" /> : "Confirm"}
                 </Button>
               </VStack>
             </ModalBody>

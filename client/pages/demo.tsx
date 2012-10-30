@@ -1,4 +1,12 @@
-import { VStack, Text, HStack, Box, Image, Button } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  HStack,
+  Box,
+  Divider,
+  Image,
+  Button,
+} from "@chakra-ui/react";
 import styles from "@styles/Home.module.css";
 import Link from "next/link";
 import withTransition from "@components/withTransition";
@@ -63,12 +71,12 @@ const pastCampaigns = [
 
 function Home() {
   const { address } = useAccount();
-  const [isOnboarding, setIsOnboarding] = useState<boolean>(true);
-  const [isNull, setIsNull] = useState<boolean>(null);
+  const [isOnboarding, setIsOnboarding] = useState<boolean>(false);
+  const [isNull, setIsNull] = useState<boolean>(false);
 
   if (!address) return <Landing />;
 
-  if (isOnboarding) return <Onboarding setIsOnboarding={setIsOnboarding} />;
+  if (isOnboarding) return <Onboarding />;
 
   if (isNull)
     return (

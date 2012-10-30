@@ -399,6 +399,12 @@
   text-align: center;
 }
 
+.nftImage {
+  width: 500px;
+  height: 500px;
+
+  border-radius: 20px;
+}
 .sbtImage {
   width: 325px;
   height: 325px;

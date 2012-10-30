@@ -8,7 +8,7 @@ function Landing() {
       <main className={styles.main}>
         <VStack>
           <Text className={styles.title}>
-            DAO community management, simplified
+            Web3 community management, simplified
           </Text>
           <Text className={styles.subtitle}>
             Powered by NFTs, you can engage, monitor, and reward your community

@@ -72,7 +72,7 @@ const chiadoChain: Chain = {
     symbol: "xDai",
   },
   rpcUrls: {
-    default: "https://rpc.eu-central-2.gateway.fm/v3/gnosis/archival/chiado",
+    default: "https://rpc.chiadochain.net",
   },
   blockExplorers: {
     default: { name: "Gnosis Scan", url: "https://rpc.chiadochain.net" },

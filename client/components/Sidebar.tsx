@@ -13,6 +13,7 @@ import {
   Image,
   Link as ChakraLink,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import styles from "@styles/Navbar.module.css";
 import { useAccount } from "wagmi";
 
@@ -58,11 +59,11 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <Text className={styles.sectionText2}>
                 The soulbound NFT that dynamically updates based on user tiers.
               </Text>
-              <ChakraLink href="https://opensea.io" isExternal>
+              <Link href="/myNFT">
                 <Button className={styles.secondaryBtn}>
                   View card details
                 </Button>
-              </ChakraLink>
+              </Link>
             </VStack>
             <Image src="/bronze-sbt.png" className={styles.sbtSidebar}></Image>
           </HStack>
