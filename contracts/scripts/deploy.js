@@ -2,35 +2,16 @@ const hre = require("hardhat");
 const fs = require("fs");
 
 async function main() {
-  const MyNFT = await hre.ethers.getContractFactory("MyNFT");
+  const Membership = await hre.ethers.getContractFactory("Membership");
 
-  const ROYALTY_RECEIVER_ADDR = process.env.ROYALTY_RECEIVER_ADDR;
-
-  if (!ROYALTY_RECEIVER_ADDR) {
-    console.log("ROYALTY_RECEIVER_ADDR is required. Please update your .env");
-    return;
-  }
-
-  const deployedContract = await MyNFT.deploy(ROYALTY_RECEIVER_ADDR);
+  const deployedContract = await Membership.deploy(
+    "Sample Membership NFT",
+    "SMNFT"
+  );
 
   await deployedContract.deployed();
 
-  console.log("MyNFT deployed to:", deployedContract.address);
-
-  fs.copyFile(
-    "artifacts/contracts/nft.sol/MyNFT.json",
-    "../frontend/basic/data/MyNFT.json",
-    (err) => {
-      if (err) {
-        console.log("Error Found:", err);
-      } else {
-        console.log(
-          "\nCopied ABI file:",
-          fs.readFileSync("../frontend/basic/data/MyNFT.json", "utf8")
-        );
-      }
-    }
-  );
+  console.log("Membership NFT deployed to:", deployedContract.address);
 
   return deployedContract;
 }
