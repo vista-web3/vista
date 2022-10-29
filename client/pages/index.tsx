@@ -1,5 +1,16 @@
-import { VStack, Text, HStack, Box, Divider, Image } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  HStack,
+  Box,
+  Divider,
+  Image,
+  Button,
+} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
+import Link from "next/link";
+import withTransition from "@components/withTransition";
+import { useState } from "react";
 
 const campaigns = [
   {
@@ -60,19 +71,49 @@ const campaigns = [
   },
 ];
 
-export default function Home() {
+function Home() {
+  const [isNull, setIsNull] = useState<boolean>(false);
+
+  if (isNull)
+    return (
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <VStack>
+            <Image alt="null" src="/null.png"></Image>
+            <VStack gap="1rem">
+              <Text className={styles.title}>Start your first campaign</Text>
+              <Text className={styles.nullSubtitle}>
+                You don’t have any active campaigns. Start a new campaign to
+                drop a proof of engagement NFT.
+              </Text>
+              <Link href="/create">
+                <Button className={styles.primaryBtn}>
+                  Start new campaign
+                </Button>
+              </Link>
+            </VStack>
+          </VStack>
+        </main>
+      </div>
+    );
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <VStack className={styles.titleContainer}>
-          <Text className={styles.title}>GM Arbitrum! 👋</Text>
-          <HStack>
-            <Box className={styles.green}></Box>
-            <Text className={styles.subtitle}>
-              Dashboard last updated 11/01/22
-            </Text>
-          </HStack>
-        </VStack>
+        <HStack className={styles.topContainer}>
+          <VStack className={styles.titleContainer}>
+            <Text className={styles.title}>GM Builder DAO! 👋</Text>
+            <HStack>
+              <Box className={styles.green}></Box>
+              <Text className={styles.subtitle}>
+                Dashboard last updated 11/01/22
+              </Text>
+            </HStack>
+          </VStack>
+          <Link href="/create">
+            <Button className={styles.primaryBtn}>+ New Campaigns</Button>
+          </Link>
+        </HStack>
         <HStack className={styles.audienceContainer}>
           <VStack className={styles.audienceSubcontainer}>
             <Text className={styles.sectionTitle}>Audience Growth</Text>
@@ -202,3 +243,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withTransition(Home);

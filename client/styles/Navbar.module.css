@@ -25,7 +25,7 @@
   gap: 10px;
 
   width: 199px !important;
-  height: 56px !important;
+  height: 50px !important;
 
   background: linear-gradient(
     90.77deg,
@@ -33,5 +33,181 @@
     #ff1d89 100%
   ) !important;
   border-radius: 50px !important;
-  margin-bottom: 1rem;
+}
+
+.drawerBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.drawerButton {
+  background-color: transparent !important;
+  font-size: 1.2rem !important;
+  margin-top: 10px;
+  margin-left: 1rem;
+  margin-bottom: 10px;
+  position: relative;
+  text-decoration: none;
+  padding: 0 0 0 0 !important;
+  color: rgb(0, 0, 0);
+  opacity: 0.5;
+  transition: transform 0.3s ease;
+}
+
+.drawerButton:hover {
+  opacity: 1;
+}
+
+.drawerButton:hover::before {
+  transform: scaleX(1);
+}
+
+.drawerFooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start !important;
+}
+
+.drawerFooterLabel {
+  user-select: none;
+  padding: 0.5rem 0;
+  opacity: 0.8;
+  color: white;
+}
+
+.drawerFooterButton {
+  background-color: transparent !important;
+  padding-left: 0 !important;
+  justify-content: flex-start !important;
+  color: white;
+  opacity: 0.8;
+  text-decoration: none !important;
+}
+
+.drawerFooterButton:hover {
+  text-decoration: none !important;
+  opacity: 1;
+}
+
+.notificationBox {
+  position: relative;
+  top: -3px;
+}
+
+.redAlert {
+  position: absolute;
+  opacity: 1;
+  right: 0;
+  top: 5px;
+  width: 15px;
+  z-index: 10;
+}
+
+.giftIcon {
+  width: 30px;
+  opacity: 0.5;
+}
+
+.notificationContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+}
+
+.notificationTitleContainer {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+.notificationTitle {
+  font-weight: 700;
+  color: black;
+}
+
+.notificationSubtitle {
+  margin-top: 0 !important;
+  font-weight: 400;
+  color: black;
+  opacity: 0.5;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+
+  /* Full White */
+
+  color: #ffffff;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 16px;
+
+  width: 452px;
+
+  background: #141414;
+  border-radius: 20px;
+
+  align-items: flex-start !important;
+}
+
+.sectionLabel {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+
+  color: #a8a8a8;
+}
+
+.sectionText {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.secondaryBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 40px;
+  gap: 10px;
+
+  width: 189px !important;
+  height: 40px !important;
+  border-radius: 50px !important;
+
+  background: linear-gradient(#141414, #141414) padding-box,
+    linear-gradient(to right, #9e00ff, #ff1d89) border-box !important ;
+  border: 2px solid transparent !important;
+}
+
+.sbtSidebar {
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
+}
+
+.sectionText2 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
 }

@@ -12,16 +12,19 @@ import {
   Button,
   SimpleGrid,
 } from "@chakra-ui/react";
+import withTransition from "@components/withTransition";
 import { withTheme } from "@emotion/react";
 import styles from "@styles/Create.module.css";
 import { useState } from "react";
 
-export default function Create() {
+function Create() {
   const [files, setFiles] = useState<Blob[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<any>({});
   const [isCategoriesVisible, setCategoriesVisible] = useState<boolean>();
   const [isCountriesVisible, setCountriesVisible] = useState<boolean>();
   const [selectedTag, setSelectedTag] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isSBT, setSBT] = useState<boolean>(true);
 
   function handleFileUpload(e) {
     setFiles((prev) => [...prev, e.target.files[0]]);
@@ -32,23 +35,33 @@ export default function Create() {
     setCountriesVisible(false);
   }
 
-  function handleSelectCategories(category: string) {
-    const copiedCategories = { ...selectedCategories };
-    if (selectedCategories[category]) {
-      delete copiedCategories[category];
-    } else {
-      copiedCategories[category] = true;
-    }
-    setSelectedCategories(copiedCategories);
+  if (isSuccess) {
+    return (
+      <VStack className={styles.container}>
+        <HStack className={styles.contentContainer}>
+          <VStack w="100%" gap="1rem">
+            <Image alt="builder dao" src="/dao.png" pb="1rem"></Image>
+            <Text className={styles.title}>Woo, your NFT is live!</Text>
+            <Text className={styles.successHeader}>
+              Your proof of engagement NFT is available for users to claim.
+              Please copy the link below to share the NFT with your community.
+            </Text>
+            <HStack>
+              <HStack className={styles.inputBox}>
+                <Text>vista.xyz/78123qqr</Text>
+              </HStack>
+              <Button className={styles.primaryBtn}>Copy invite link</Button>
+            </HStack>
+          </VStack>
+        </HStack>
+      </VStack>
+    );
   }
+
   return (
     <VStack className={styles.container}>
-      <HStack className={styles.backSection}>
-        <ArrowBackIcon className={styles.backIcon} />
-      </HStack>
       <HStack className={styles.contentContainer}>
         <VStack className={styles.leftSection}>
-          <Text className={styles.steps}>Steps 1/2</Text>
           <Text className={styles.title}>Create Proof of Engagement</Text>
           <VStack className={styles.inputContainer}>
             <Text className={styles.inputHeader}>Name</Text>
@@ -96,7 +109,7 @@ export default function Create() {
           </VStack>
         </VStack>
         <VStack className={styles.rightSection}>
-          <Button className={styles.primaryBtn}>Next</Button>
+          <Button className={styles.primaryBtn}>Confirm</Button>
           <VStack className={styles.inputContainer}>
             <VStack className={styles.fileUploadContainer}>
               <input
@@ -126,3 +139,4 @@ export default function Create() {
     </VStack>
   );
 }
+export default withTransition(Create);
