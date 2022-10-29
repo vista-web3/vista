@@ -7,7 +7,7 @@ const Navbar = () => {
     <HStack className={styles.navbar}>
       <Link href="/">
         <Image
-          src="/logo.png"
+          src="/logo.svg"
           alt="Logo"
           cursor="pointer"
           className={styles.logo}
@@ -15,6 +15,13 @@ const Navbar = () => {
       </Link>
       <HStack className={styles.navLeftSection}>
         {/* <ConnectButton /> */}
+        <Link href="/dashboard">
+          <Text fontWeight={700}>Dashboard</Text>
+        </Link>
+        <Link href="/community">
+          <Text fontWeight={700}>Community Management</Text>
+        </Link>
+        <Button className={styles.primaryBtn}>+ New Campaigns</Button>
       </HStack>
     </HStack>
   );
