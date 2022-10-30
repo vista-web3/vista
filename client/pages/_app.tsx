@@ -17,6 +17,29 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import merge from "lodash.merge";
 import Head from "next/head";
 
+const cronosTestnet: Chain = {
+  id: 338,
+  name: "Cronos Testnet",
+  network: "Cronos",
+  iconUrl: "/cronos.png",
+  iconBackground: "#18151E",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Cronos Token",
+    symbol: "tCRO",
+  },
+  rpcUrls: {
+    default: "https://cronos-testnet-3.crypto.org:8545/",
+  },
+  blockExplorers: {
+    default: {
+      name: "Cronos Explorer",
+      url: "https://cronos.crypto.org/explorer/testnet3/",
+    },
+  },
+  testnet: true,
+};
+
 const cronosMainnet: Chain = {
   id: 25,
   name: "Cronos Mainnet",
@@ -33,6 +56,26 @@ const cronosMainnet: Chain = {
   },
   blockExplorers: {
     default: { name: "Cronos Explorer", url: "https://cronos.org/explorer/" },
+  },
+  testnet: true,
+};
+
+const chiadoChain: Chain = {
+  id: 10200,
+  name: "Chiado Testnet",
+  network: "Gnosis Chiado Testnet",
+  iconUrl: "/gnosis.png",
+  iconBackground: "#18151E",
+  nativeCurrency: {
+    decimals: 18,
+    name: "xDai Token",
+    symbol: "xDai",
+  },
+  rpcUrls: {
+    default: "https://rpc.eu-central-2.gateway.fm/v3/gnosis/archival/chiado",
+  },
+  blockExplorers: {
+    default: { name: "Gnosis Scan", url: "https://rpc.chiadochain.net" },
   },
   testnet: true,
 };
@@ -58,12 +101,19 @@ const gnosisChain: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, cronosMainnet, gnosisChain],
+  [
+    chain.goerli,
+    chain.mainnet,
+    cronosTestnet,
+    cronosMainnet,
+    chiadoChain,
+    gnosisChain,
+  ],
   [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "Nexus",
+  appName: "Vista",
   chains,
 });
 

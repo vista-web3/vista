@@ -238,11 +238,6 @@
   align-items: flex-start !important;
 }
 
-.campaignImageContainer {
-  position: relative;
-  width: 100%;
-}
-
 .pill {
   position: absolute;
   left: 1rem;
@@ -252,8 +247,8 @@
   justify-content: center;
   align-items: center;
 
-  width: 92px;
   height: 39px;
+  padding: 0 1rem;
 
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
@@ -288,7 +283,6 @@
 
 .campaignContainer {
   align-items: flex-start !important;
-  width: 1000px;
 }
 
 .campaignListContainer {
@@ -323,7 +317,12 @@
   width: 1350px;
   overflow-x: scroll;
   overflow-y: hidden;
+  justify-content: flex-start !important;
   gap: 2rem;
+}
+
+.campaignImageContainer {
+  position: relative;
 }
 
 .primaryBtn {

@@ -13,71 +13,70 @@ import withTransition from "@components/withTransition";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import Landing from "@components/Landing";
+import Onboarding from "@components/Onboarding";
 
 const campaigns = [
   {
     title: "ETHLisbon Happy Hour",
     image: "/1.png",
-    createdAt: new Date(),
+    createdAt: "Today",
     tokenSupply: 250,
     claimed: 150,
-    tag: "Appreciator",
+    tag: "Supporter",
   },
   {
-    title: "ETHLisbon Happy Hour",
-    image: "/1.png",
-    createdAt: new Date(),
+    title: "Developing on Testnet",
+    image: "/testnet.png",
+    createdAt: "Sunday, 10/30",
+    tokenSupply: 777,
+    claimed: 172,
+    tag: "Developer",
+  },
+];
+
+const pastCampaigns = [
+  {
+    title: "DAO Follower on Twitter",
+    image: "/twitter.png",
+    createdAt: "Wednesday, 10/28",
     tokenSupply: 250,
     claimed: 150,
-    tag: "Appreciator",
+    tag: "Supporter",
   },
   {
-    title: "ETHLisbon Happy Hour",
-    image: "/1.png",
-    createdAt: new Date(),
-    tokenSupply: 250,
-    claimed: 150,
-    tag: "Appreciator",
+    title: "Devcon Tech Talk",
+    image: "/devcon.png",
+    createdAt: "Friday, 10/7",
+    tokenSupply: 777,
+    claimed: 573,
+    tag: "Contributor",
   },
   {
-    title: "ETHLisbon Happy Hour",
-    image: "/1.png",
-    createdAt: new Date(),
-    tokenSupply: 250,
-    claimed: 150,
-    tag: "Appreciator",
+    title: "Merged PR into DAO Repo",
+    image: "/pr.png",
+    createdAt: "Tuesday, 9/23",
+    tokenSupply: 500,
+    claimed: 182,
+    tag: "Developer",
   },
   {
-    title: "ETHLisbon Happy Hour",
-    image: "/1.png",
-    createdAt: new Date(),
-    tokenSupply: 250,
-    claimed: 150,
-    tag: "Appreciator",
-  },
-  {
-    title: "ETHLisbon Happy Hour",
-    image: "/1.png",
-    createdAt: new Date(),
-    tokenSupply: 250,
-    claimed: 150,
-    tag: "Appreciator",
-  },
-  {
-    title: "ETHLisbon Happy Hour",
-    image: "/1.png",
-    createdAt: new Date(),
-    tokenSupply: 250,
-    claimed: 150,
-    tag: "Appreciator",
+    title: "Boo! IRL BuilderDAO Meetup",
+    image: "/boo.png",
+    createdAt: "Monday, 9/13",
+    tokenSupply: 500,
+    claimed: 371,
+    tag: "Contributor",
   },
 ];
 
 function Home() {
   const { address } = useAccount();
+  const [isOnboarding, setIsOnboarding] = useState<boolean>(false);
   const [isNull, setIsNull] = useState<boolean>(false);
 
   if (!address) return <Landing />;
+
+  if (isOnboarding) return <Onboarding />;
 
   if (isNull)
     return (
@@ -111,7 +110,7 @@ function Home() {
             <HStack>
               <Box className={styles.green}></Box>
               <Text className={styles.subtitle}>
-                Dashboard last updated 11/01/22
+                Dashboard last updated 10/30/22
               </Text>
             </HStack>
           </VStack>
@@ -135,14 +134,14 @@ function Home() {
                 <Text className={styles.snapshotTitle}>15,006</Text>
                 <Text className={styles.snapshotSubtitle}>Total members</Text>
                 <Box className={styles.divider} />
-                <Text className={styles.snapshotTitle}>80,554</Text>
+                <Text className={styles.snapshotTitle}>8,554</Text>
                 <Text className={styles.snapshotSubtitle}>
-                  Proof of engagement NFTs claimed
+                  Proof of engagement NFTs issued
                 </Text>
                 <Box className={styles.divider} />
-                <Text className={styles.snapshotTitle}>120,000</Text>
+                <Text className={styles.snapshotTitle}>112,383</Text>
                 <Text className={styles.snapshotSubtitle}>
-                  Proof of engagement NFTs awarded
+                  Proof of engagement NFTs claimed
                 </Text>
               </VStack>
               <VStack className={styles.snapshotTiersContainer}>
@@ -191,7 +190,7 @@ function Home() {
                       className={styles.campaignImage}
                     ></Image>
                     <VStack className={styles.pill}>
-                      <Text className={styles.pillText}>Today</Text>
+                      <Text className={styles.pillText}>{createdAt}</Text>
                     </VStack>
                   </VStack>
                   <Text className={styles.campaignTitle}>{title}</Text>
@@ -214,7 +213,7 @@ function Home() {
         <VStack className={styles.campaignListContainer}>
           <Text className={styles.sectionTitle}>Past campaigns</Text>
           <HStack className={styles.campaignCarousel}>
-            {campaigns.map(
+            {pastCampaigns.map(
               ({ image, title, createdAt, claimed, tokenSupply, tag }, idx) => (
                 <VStack key={idx} className={styles.campaignContainer}>
                   <VStack className={styles.campaignImageContainer}>
@@ -224,7 +223,7 @@ function Home() {
                       className={styles.campaignImage}
                     ></Image>
                     <VStack className={styles.pill}>
-                      <Text className={styles.pillText}>Today</Text>
+                      <Text className={styles.pillText}>{createdAt}</Text>
                     </VStack>
                   </VStack>
                   <Text className={styles.campaignTitle}>{title}</Text>

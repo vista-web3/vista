@@ -12,7 +12,7 @@ function Landing() {
           </Text>
           <Text className={styles.subtitle}>
             Powered by NFTs, you can engage, monitor, and reward your community
-            members, all on Vista.
+            members - all on Vista.
           </Text>
           <Image
             src="/ipad.png"
@@ -31,8 +31,8 @@ function Landing() {
                   Unlock powerful insights to fuel growth
                 </Text>
                 <Text className={styles.sectionSubtitle}>
-                  Filter by attributes like status level, number of proof of
-                  engagements, date joined, and participant type
+                  Filter by attributes such as member type, engagement tier, and
+                  number of proof of engagements
                 </Text>
               </VStack>
             </HStack>
@@ -47,8 +47,9 @@ function Landing() {
                   Dynamic membership NFTs to engage your audience
                 </Text>
                 <Text className={styles.sectionSubtitle}>
-                  Incentivize engagement with loyalty tiers that unlock
-                  exclusive rewards
+                  Incentivize member engagement with loyalty tiers that unlock
+                  exclusive rewards, powered by dynamically updating soul-bound
+                  community NFTs
                 </Text>
               </VStack>
             </HStack>
@@ -70,8 +71,9 @@ function Landing() {
                   Targeted airdrops in seconds
                 </Text>
                 <Text className={styles.sectionSubtitle}>
-                  Select the audience based on tags and level of engagement, and
-                  input how much and what token you want to airdrop.
+                  Select the audience based on attributes and levels of
+                  engagement, and batch reward them with tokens you want to
+                  airdrop.
                 </Text>
               </VStack>
             </HStack>

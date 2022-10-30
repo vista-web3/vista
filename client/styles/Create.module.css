@@ -122,9 +122,9 @@
   background: white;
   color: black;
   z-index: 1;
-  top: 170px;
+  bottom: -10px;
   width: 550px;
-  height: 200px;
+  height: 120px;
   overflow-y: scroll;
   padding: 1rem;
   border-radius: 15px;
@@ -210,6 +210,62 @@
   color: transparent;
 }
 
+.editNFT {
+  z-index: 1;
+}
+
+.editPill {
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  cursor: pointer;
+  z-index: 0;
+
+  right: -20px;
+  width: 129px;
+  height: 39px;
+
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 50px;
+
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.editPillContainer {
+  position: absolute;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 31px;
+  left: 337px;
+  top: 427px;
+}
+
+.editPillContentContainer {
+  position: relative;
+}
+
+.editPill::-webkit-file-upload-button {
+  display: none;
+}
+
+.editPill[type="file"] {
+  color: transparent;
+}
+
+.previewImage {
+  margin-top: 1rem;
+  width: 482px;
+  height: 482px;
+
+  border-radius: 20px;
+  padding: 0.5rem 0;
+}
+
 .fileUploaderTextContainer {
   position: absolute;
   top: 180px;
@@ -244,24 +300,6 @@
 
 .previewImageContainer {
   position: relative;
-}
-
-.closeBtn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
-  background: #ededed;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.previewImage {
-  width: 200px;
-  height: 200px;
-  border-radius: 20px;
 }
 
 .buttonContainer {
@@ -349,7 +387,7 @@
 
   background: linear-gradient(black, black) padding-box,
     linear-gradient(to right, #9e00ff, #ff1d89) border-box !important ;
-  border: 4px solid transparent !important;
+  border: 3px solid transparent !important;
 }
 
 .successClaimHeader {
@@ -365,7 +403,6 @@
   width: 325px;
   height: 325px;
 
-  padding-bottom: 1rem;
   border-radius: 20px;
 }
 
@@ -410,4 +447,10 @@
 .previewSBTImage {
   width: 482px;
   height: 482px;
+}
+
+.leftSection2 {
+  align-items: flex-start !important;
+  height: 500px;
+  overflow-y: scroll;
 }

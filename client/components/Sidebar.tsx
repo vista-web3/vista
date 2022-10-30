@@ -11,17 +11,26 @@ import {
   Text,
   VStack,
   Image,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 import styles from "@styles/Navbar.module.css";
-import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
+import { useAccount } from "wagmi";
 
 type SidebarProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
+export function abridgeAddress(address?: string) {
+  if (!address) return address;
+  const l = address.length;
+  if (l < 20) return address;
+  return `${address.substring(0, 6)}...${address.substring(l - 4, l)}`;
+}
+
 export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const { address } = useAccount();
+
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
@@ -37,7 +46,9 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           <VStack className={styles.section}>
             <Text className={styles.sectionLabel}>Wallet address</Text>
             <HStack w="100%" justifyContent="space-between">
-              <Text className={styles.sectionText}>0xdF...428D</Text>
+              <Text className={styles.sectionText}>
+                {abridgeAddress(address)}
+              </Text>
               <Image src="copy.svg"></Image>
             </HStack>
           </VStack>
@@ -47,7 +58,11 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <Text className={styles.sectionText2}>
                 The soulbound NFT that dynamically updates based on user tiers.
               </Text>
-              <Button className={styles.secondaryBtn}>View card details</Button>
+              <ChakraLink href="https://opensea.io" isExternal>
+                <Button className={styles.secondaryBtn}>
+                  View card details
+                </Button>
+              </ChakraLink>
             </VStack>
             <Image src="/bronze-sbt.png" className={styles.sbtSidebar}></Image>
           </HStack>
