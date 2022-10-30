@@ -1,0 +1,52 @@
+{
+  "name": "nft-dapp-starter-kit",
+  "version": "1.0.0",
+  "description": "",
+  "bugs": {
+    "url": "https://github.com/CoinbaseWallet/nft-dapp-starter-kit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoinbaseWallet/nft-dapp-starter-kit.git"
+  },
+  "keywords": [],
+  "author": "straightupjac & jeongmincho",
+  "license": "ISC",
+  "homepage": "https://github.com/CoinbaseWallet/nft-dapp-starter-kit#readme",
+  "scripts": {
+    "verify": "npx hardhat etherscan-verify",
+    "test": "npx hardhat test --network hardhat",
+    "deploy": "npx hardhat run scripts/deploy.js",
+    "mintPublicSale": "npx hardhat run scripts/mintPublicSale.js",
+    "giftTokens": "npx hardhat run scripts/giftTokens.js",
+    "reserveTokens": "npx hardhat run scripts/reserveTokens.js",
+    "setBaseURI": "npx hardhat run scripts/setBaseURI.js",
+    "setProvenanceHash": "npx hardhat run scripts/setProvenanceHash.js",
+    "setPublicSaleActive": "npx hardhat run scripts/setPublicSaleActive.js",
+    "setPresaleActive": "npx hardhat run scripts/setPreSaleActive.js",
+    "setSaleInactive": "npx hardhat run scripts/setSaleInactive.js",
+    "setPresaleListMerkle": "npx hardhat run scripts/setPreSaleListMerkleRoot.js",
+    "setRoyaltyReceiverAddress": "npx hardhat run scripts/setRoyaltyReceiverAddress.js",
+    "withdraw": "npx hardhat run scripts/withdraw.js",
+    "withdrawTokens": "npx hardhat run scripts/withdrawTokens.js"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.4",
+    "hardhat": "^2.9.3",
+    "hardhat-contract-sizer": "^2.6.1"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
+    "dotenv": "^16.0.0",
+    "fs": "^0.0.1-security",
+    "hardhat-gas-reporter": "^1.0.8",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.31",
+    "solidity-coverage": "^0.7.21"
+  }
+}
