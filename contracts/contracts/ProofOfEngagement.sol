@@ -2,13 +2,12 @@
 
 pragma solidity ^0.8.0;
 
-
-import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Strings.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Address.sol";
-import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -20,11 +19,11 @@ contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
     string private baseURI;
 
     string private collectionURI;
-    
+
     string public provenanceHash;
 
     string public tag;
- 
+
     // ============ CUSTOMIZE VALUES BELOW ============
     // uint256 public constant MAX_TOTAL_SUPPLY = 8000;
 
@@ -39,8 +38,11 @@ contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
 
     // ================================================
 
-    constructor(string memory _name, string memory _symbol, string memory _tag) ERC721(_name, _symbol)
-    {
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        string memory _tag
+    ) ERC721(_name, _symbol) {
         tag = _tag;
     }
 

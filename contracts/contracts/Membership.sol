@@ -1,12 +1,12 @@
 // based on https://github.com/kaymomin/soulbound-nft-token-smart-contract/blob/main/soulbound.sol
 // and https://github.com/coinbase/nft-dapp-starter-kit/tree/main/smart-contracts
 
-import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Strings.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Address.sol";
-import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract Membership is ERC721, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -22,12 +22,15 @@ contract Membership is ERC721, Ownable, ReentrancyGuard {
 
     event SetCollectionURI(string indexed uri);
 
-    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
+    constructor(string memory _name, string memory _symbol)
+        ERC721(_name, _symbol)
+    {}
 
     modifier isExistingToken(uint256 tokenId) {
         require(_exists(tokenId), "Non-existent token");
         _;
     }
+
     function getBaseURI() external view returns (string memory) {
         return baseURI;
     }
@@ -59,12 +62,12 @@ contract Membership is ERC721, Ownable, ReentrancyGuard {
     }
 
     function _beforeTokenTransfer(
-        address from, 
-        address to, 
+        address from,
+        address to,
         uint256 tokenId
-    ) internal override virtual {
-    require(from == address(0), "Err: token transfer is BLOCKED"); 
-    super._beforeTokenTransfer(from, to, tokenId);  
+    ) internal virtual override {
+        require(from == address(0), "Err: token transfer is BLOCKED");
+        super._beforeTokenTransfer(from, to, tokenId);
     }
 
     // The following functions are overrides required by Solidity.
