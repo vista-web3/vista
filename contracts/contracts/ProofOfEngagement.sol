@@ -2,16 +2,13 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/interfaces/IERC2981.sol";
-import "@openzeppelin/contracts/interfaces/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
+import "../node_modules/@openzeppelin/contracts/utils/Strings.sol";
+import "../node_modules/@openzeppelin/contracts/utils/Address.sol";
+import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -25,6 +22,8 @@ contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
     string private collectionURI;
     
     string public provenanceHash;
+
+    string public tag;
  
     // ============ CUSTOMIZE VALUES BELOW ============
     // uint256 public constant MAX_TOTAL_SUPPLY = 8000;
@@ -40,19 +39,12 @@ contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
 
     // ================================================
 
-    constructor(string _name, string _symbol) ERC721(_name, _symbol)
-    {}
-
-    // ============ ACCESS CONTROL MODIFIERS ============
-    modifier canMint(uint256 numberOfTokens) {
-        require(
-            tokenCounter.current() + numberOfTokens <=
-                MAX_TOTAL_SUPPLY - MAX_RESERVE_TOKENS + numReservedTokens,
-            "Insufficient tokens remaining"
-        );
-        _;
+    constructor(string memory _name, string memory _symbol, string memory _tag) ERC721(_name, _symbol)
+    {
+        tag = _tag;
     }
 
+    // ============ ACCESS CONTROL MODIFIERS ============
     modifier hasAddresses(address[] calldata addresses) {
         require(addresses.length > 0, "Addresses array empty");
         _;
@@ -64,25 +56,6 @@ contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
     }
 
     // ============ PUBLIC FUNCTIONS FOR MINTING ============
-    // /**
-    //  * @dev gift token directly to list of recipients
-    //  */
-    // function giftTokens(address[] calldata addresses)
-    //     external
-    //     nonReentrant
-    //     onlyOwner
-    //     canReserveTokens(addresses.length)
-    //     hasAddresses(addresses)
-    // {
-    //     numReservedTokens += addresses.length;
-
-    //     for (uint256 i = 0; i < addresses.length; i++) {
-    //         _safeMint(addresses[i], nextTokenId());
-    //     }
-
-    //     emit GiftTokens(addresses);
-    // }
-
     // ============ PUBLIC READ-ONLY FUNCTIONS ============
     function getBaseURI() external view returns (string memory) {
         return baseURI;
@@ -128,27 +101,4 @@ contract ProofOfEngagement is ERC721, Ownable, ReentrancyGuard {
 
         emit SetCollectionURI(_collectionURI);
     }
-    
-    function setProvenanceHash(string calldata _hash) public onlyOwner {
-        provenanceHash = _hash;
-    }
-
-    function withdraw(address payable _dest) external onlyOwner {
-        uint256 _balance = address(this).balance;
-        _dest.sendValue(_balance);
-
-        emit Withdraw(_dest);    
-    }
-
-    function withdrawToken(address _tokenAddress, address _dest) external onlyOwner {
-        uint256 _balance = IERC20(_tokenAddress).balanceOf(address(this));
-        SafeERC20.safeTransfer(IERC20(_tokenAddress), _dest, _balance);
-
-        emit WithdrawToken(_tokenAddress, _dest);
-    }
-
-    /**
-     * @dev enable contract to receive ethers in royalty
-     */
-    receive() external payable {}
 }
