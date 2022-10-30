@@ -63,67 +63,67 @@ function Create() {
     setUploadedImage(e.target.files[0]);
   }
 
-  const client = new Web3Storage({
-    token: WEB3_STORAGE_TOKEN,
-    endpoint: new URL("https://api.web3.storage"),
-  });
+  //   const client = new Web3Storage({
+  //     token: WEB3_STORAGE_TOKEN,
+  //     endpoint: new URL("https://api.web3.storage"),
+  //   });
 
-  const demoTokenURI =
-    "https://bafybeicynj2l3xinctywttkivp44me4dkh7kqi77twtyxipmmgblkoib2a.ipfs.w3s.link/tokenURI.json";
+  //   const demoTokenURI =
+  //     "https://bafybeicynj2l3xinctywttkivp44me4dkh7kqi77twtyxipmmgblkoib2a.ipfs.w3s.link/tokenURI.json";
 
-  async function uploadImage() {
-    if (!uploadedImage) return;
+  //   async function uploadImage() {
+  //     if (!uploadedImage) return;
 
-    const blob = new Blob([uploadedImage], { type: "image/png" });
-    const imageToUpload = [new File([blob], "file.png")];
-    const imageCID = await client.put(imageToUpload);
-    const imageLink = `https://${imageCID}.ipfs.w3s.link/file.png`;
-    setImageCID(imageLink);
+  //     const blob = new Blob([uploadedImage], { type: "image/png" });
+  //     const imageToUpload = [new File([blob], "file.png")];
+  //     const imageCID = await client.put(imageToUpload);
+  //     const imageLink = `https://${imageCID}.ipfs.w3s.link/file.png`;
+  //     setImageCID(imageLink);
 
-    return imageLink;
-  }
+  //     return imageLink;
+  //   }
 
-  async function uploadJSON() {
-    const imageCID = await uploadImage();
+  //   async function uploadJSON() {
+  //     const imageCID = await uploadImage();
 
-    const jsonObject = {
-      name: name,
-      description: description,
-      collection: "Nexus Protocol Collection 3",
-      image_url:
-        imageCID ??
-        "https://bafybeie6rfxujzadhx5t3ofso6sckg33jknl5vhobmgby7uetpmbzaojvm.ipfs.w3s.link/preview.png",
-    };
-    const blob = new Blob([JSON.stringify(jsonObject)], {
-      type: "application/json",
-    });
+  //     const jsonObject = {
+  //       name: name,
+  //       description: description,
+  //       collection: "Nexus Protocol Collection 3",
+  //       image_url:
+  //         imageCID ??
+  //         "https://bafybeie6rfxujzadhx5t3ofso6sckg33jknl5vhobmgby7uetpmbzaojvm.ipfs.w3s.link/preview.png",
+  //     };
+  //     const blob = new Blob([JSON.stringify(jsonObject)], {
+  //       type: "application/json",
+  //     });
 
-    const files = [new File([blob], "metadata.json")];
-    const jsonCID = await client.put(files);
-    const jsonLink = `https://${jsonCID}.ipfs.w3s.link/metadata.json`;
-    setJsonCID(jsonLink);
+  //     const files = [new File([blob], "metadata.json")];
+  //     const jsonCID = await client.put(files);
+  //     const jsonLink = `https://${jsonCID}.ipfs.w3s.link/metadata.json`;
+  //     setJsonCID(jsonLink);
 
-    return jsonLink;
-  }
+  //     return jsonLink;
+  //   }
 
-  const { config } = usePrepareContractWrite({
-    addressOrName: "0xd2d99f4dF0a6e489EB70EE471E42Af4677f5E474",
-    contractInterface: MyNFT.abi,
-    functionName: "mint",
-    args: [jsonCID],
-  });
+  //   const { config } = usePrepareContractWrite({
+  //     addressOrName: "0xd2d99f4dF0a6e489EB70EE471E42Af4677f5E474",
+  //     contractInterface: MyNFT.abi,
+  //     functionName: "mint",
+  //     args: [jsonCID],
+  //   });
 
-  const {
-    data: txnData,
-    isLoading,
-    isSuccess,
-    write: mintNFT,
-  } = useContractWrite(config);
+  //   const {
+  //     data: txnData,
+  //     isLoading,
+  //     isSuccess,
+  //     write: mintNFT,
+  //   } = useContractWrite(config);
 
-  async function handleListAsset() {
-    const jsonUploaded = await uploadJSON();
-    mintNFT(jsonUploaded);
-  }
+  //   async function handleListAsset() {
+  //     const jsonUploaded = await uploadJSON();
+  //     mintNFT(jsonUploaded);
+  //   }
 
   function handleFileUpload(e) {
     setFile(e.target.files[0]);
