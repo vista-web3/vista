@@ -73,7 +73,7 @@ const theme = extendTheme({
 /* RainbowKit Theming */
 const customTheme = merge(darkTheme(), {
   colors: {
-    accentColor: "#18151E",
+    accentColor: "#FA1B91",
   },
 } as Theme);
 

@@ -138,3 +138,17 @@
   border: 3px solid transparent !important;
   border-radius: 10px;
 }
+
+.filterContainer {
+  padding: 16px 0px 16px 8px;
+  gap: 10px;
+
+  height: 40px;
+
+  background: linear-gradient(#431028, #431028) padding-box,
+    linear-gradient(to right, #9e00ff, #ff1d89) border-box !important ;
+  border: 3px solid transparent !important;
+  border-radius: 10px;
+
+  justify-content: space-between !important;
+}

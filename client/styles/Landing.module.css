@@ -1,0 +1,143 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ellipse {
+  position: absolute;
+  width: 869px;
+  height: 869px;
+  left: -351px;
+  top: 462px;
+
+  transform: rotate(79.25deg);
+
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.title {
+  padding-top: 6rem;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 99.7%;
+  width: 781px;
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 119.7%;
+  width: 611px;
+  text-align: center;
+
+  display: flex;
+  color: #a8a8a8;
+}
+
+.ipadHero {
+  padding-top: 3rem;
+  background-color: black;
+  width: 1023px;
+  height: 784px;
+  z-index: 1;
+}
+
+.section {
+  width: 1100px;
+  height: 500px;
+
+  background: linear-gradient(
+    108.79deg,
+    rgba(255, 255, 255, 0.1) 40.56%,
+    rgba(255, 255, 255, 0.2) 97.23%
+  );
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  filter: blur(0.5px);
+  backdrop-filter: blur(17.5px);
+
+  padding: 3rem;
+  border-radius: 25px;
+  z-index: 1;
+  gap: 5rem;
+
+  justify-content: center;
+  align-items: center !important;
+}
+
+.heroFilter {
+  width: 280px;
+}
+
+.heroSbt {
+  height: 200px;
+}
+
+.sectionTitle {
+  width: 400px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 99.7%;
+}
+
+.sectionSubtitle {
+  width: 520px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 31px;
+  display: flex;
+  align-items: center;
+
+  color: #a8a8a8;
+}
+
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.heroCronos {
+  position: absolute;
+  width: 170.8px;
+  top: 0;
+  z-index: 2;
+}
+
+.heroAmount {
+  position: absolute;
+  width: 400px;
+  bottom: 0;
+  filter: drop-shadow(0px 4px 50px rgba(0, 0, 0, 0.25));
+}
+
+.divider {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  width: 1300px;
+  height: 1px;
+
+  background: #a8a8a8;
+}
+
+.footerLogo {
+  width: 114px;
+  height: 29px;
+}
+
+.footerText {
+  color: #ff1d89;
+  font-weight: 500;
+  font-size: 24px;
+}

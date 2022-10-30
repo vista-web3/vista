@@ -12,6 +12,8 @@ import {
   AccordionPanel,
   Input,
   Image,
+  filter,
+  CloseButton,
 } from "@chakra-ui/react";
 import withTransition from "@components/withTransition";
 import styles from "@styles/Community.module.css";
@@ -88,6 +90,8 @@ const users = [
     joinedAt: "10/29/2022",
   },
 ];
+
+const filters = ["Contributor", "Gold"];
 
 function Community() {
   return (
@@ -187,6 +191,14 @@ function Community() {
           </VStack>
         </VStack>
         <VStack>
+          <HStack w="100%" justifyContent="flex-start" gap=".5rem">
+            {filters.map((filter, idx) => (
+              <HStack key={idx} className={styles.filterContainer}>
+                <Text>{filter}</Text>
+                <CloseButton />
+              </HStack>
+            ))}
+          </HStack>
           <HStack className={styles.tableHeaderContainer}>
             <Text className={styles.tableHeader1}>Address</Text>
             <Text className={styles.tableHeader2}>Tag(s)</Text>

@@ -7,10 +7,12 @@ import {
   Image,
   Button,
 } from "@chakra-ui/react";
-import styles from "../styles/Home.module.css";
+import styles from "@styles/Home.module.css";
 import Link from "next/link";
 import withTransition from "@components/withTransition";
 import { useState } from "react";
+import { useAccount } from "wagmi";
+import Landing from "@components/Landing";
 
 const campaigns = [
   {
@@ -72,7 +74,10 @@ const campaigns = [
 ];
 
 function Home() {
+  const { address } = useAccount();
   const [isNull, setIsNull] = useState<boolean>(false);
+
+  if (!address) return <Landing />;
 
   if (isNull)
     return (

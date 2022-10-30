@@ -5,9 +5,12 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Sidebar } from "@components/Sidebar";
+import { useAccount } from "wagmi";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { address } = useAccount();
+
   return (
     <HStack className={styles.navbar}>
       <Link href="/">
@@ -18,21 +21,27 @@ const Navbar = () => {
           className={styles.logo}
         ></Image>
       </Link>
-      <HStack className={styles.navLeftSection}>
-        <Link href="/">
-          <Text fontWeight={700}>Dashboard</Text>
-        </Link>
-        <Link href="/community">
-          <Text fontWeight={700}>Community Management</Text>
-        </Link>
-        <ConnectButton />
-        <HamburgerIcon
-          onClick={onOpen}
-          className={styles.hamburgerButton}
-          w={7}
-          h={7}
-        />
-      </HStack>
+      {address ? (
+        <HStack className={styles.navLeftSection}>
+          <Link href="/dashboard">
+            <Text fontWeight={700}>Dashboard</Text>
+          </Link>
+          <Link href="/community">
+            <Text fontWeight={700}>Community Management</Text>
+          </Link>
+          <ConnectButton />
+          <HamburgerIcon
+            onClick={onOpen}
+            className={styles.hamburgerButton}
+            w={7}
+            h={7}
+          />
+        </HStack>
+      ) : (
+        <HStack className={styles.navLeftSection}>
+          <ConnectButton />
+        </HStack>
+      )}
       <Sidebar isOpen={isOpen} onClose={onClose} />
     </HStack>
   );
