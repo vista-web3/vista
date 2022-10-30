@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Navbar from "@components/Navbar";
 import { useEffect, useState } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { chain } from "wagmi";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
   getDefaultWallets,
@@ -16,27 +17,50 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import merge from "lodash.merge";
 import Head from "next/head";
 
-const coinExChain: Chain = {
-  id: 53,
-  name: "CSC Testnet",
-  network: "CSC",
-  iconUrl: "/csc.png",
+const cronosMainnet: Chain = {
+  id: 25,
+  name: "Cronos Mainnet",
+  network: "Cronos",
+  iconUrl: "/cronos.png",
   iconBackground: "#18151E",
   nativeCurrency: {
     decimals: 18,
-    name: "CoinEx Token",
-    symbol: "CET",
+    name: "Cronos Token",
+    symbol: "CRO",
   },
   rpcUrls: {
-    default: "https://testnet-rpc.coinex.net/",
+    default: "https://evm-cronos.crypto.org/",
   },
   blockExplorers: {
-    default: { name: "CoinEx Explorer", url: "https://testnet.coinex.net/" },
+    default: { name: "Cronos Explorer", url: "https://cronos.org/explorer/" },
   },
   testnet: true,
 };
 
-const { chains, provider } = configureChains([coinExChain], [publicProvider()]);
+const gnosisChain: Chain = {
+  id: 100,
+  name: "Gnosis Chain",
+  network: "Gnosis Chain",
+  iconUrl: "/gnosis.png",
+  iconBackground: "#18151E",
+  nativeCurrency: {
+    decimals: 18,
+    name: "xDai Token",
+    symbol: "xDai",
+  },
+  rpcUrls: {
+    default: "https://rpc.gnosischain.com",
+  },
+  blockExplorers: {
+    default: { name: "Gnosis Scan", url: "https://gnosisscan.io" },
+  },
+  testnet: true,
+};
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, cronosMainnet, gnosisChain],
+  [publicProvider()]
+);
 
 const { connectors } = getDefaultWallets({
   appName: "Nexus",
